@@ -23,7 +23,7 @@ public class Main {
         String possibleNot09=(isYearLeap(year09))?"":" не";
         System.out.println("Год "+year09+possibleNot09+" является високосным");
 
-        reverse1and0InArray(); //10
+        reverse1And0InArray(); //10
         fillArray1to100();    //11
         doubleNumbersLess6InArray();    //12
         fillDiagonalsWith1(); //13
@@ -146,7 +146,7 @@ public class Main {
 
 /* 10.Задать целочисленный массив, состоящий из элементов 0 и 1. Например:
      [ [1, 1, 0, 0,1, 0, 1, 1, 0, 0 ]. С помощью цикла и условия заменить 0 на 1,1 на 0;*/
-    private static void reverse1and0InArray(){
+    private static void reverse1And0InArray(){
         final int SIZE = 8;
         int[] array = new int[SIZE];
         for (int i=0;i<array.length;i++){
