@@ -2,31 +2,31 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        //printThreeWords(); //01
-        //checkSumSign();   //02
-        //printColor();   //03
-        //compareNumbers();   //04
+        printThreeWords(); //01
+        checkSumSign();   //02
+        printColor();   //03
+        compareNumbers();   //04
 
-//        int a05=2, b05=10;  //05
-//        String possibleNot05=sumLaysBetween10And20(a05,b05)?"":" не";
-//        System.out.println("Сумма "+a05+" и "+b05+possibleNot05+" лежит в полуинтервале (10;20]");
+        int a05=2, b05=10;  //05
+        String possibleNot05=sumLaysBetween10And20(a05,b05)?"":" не";
+        System.out.println("Сумма "+a05+" и "+b05+possibleNot05+" лежит в полуинтервале (10;20]");
 
-        //printIsNumberPositive(generateRandomInt(-3,3)); //06
+        printIsNumberPositive(generateRandomInt(-3,3)); //06
 
-//        int num07=generateRandomInt(-3,3);  //07
-//        String possibleNot07=isNumberNegative(num07)?"":" не";
-//        System.out.println("Число "+num07+possibleNot07+" является отрицательным");
+        int num07=generateRandomInt(-3,3);  //07
+        String possibleNot07=isNumberNegative(num07)?"":" не";
+        System.out.println("Число "+num07+possibleNot07+" является отрицательным");
 
-        //printStringNTimes("Cookies!",3); //08
+        printStringNTimes("Cookies!",3); //08
 
-//        int year09 = 2100;  //09
-//        String possibleNot09=(isYearLeap(year09))?"":" не";
-//        System.out.println("Год "+year09+possibleNot09+" является високосным");
+        int year09 = 2100;  //09
+        String possibleNot09=(isYearLeap(year09))?"":" не";
+        System.out.println("Год "+year09+possibleNot09+" является високосным");
 
-        //reverse1and0InArray(); //10
-        //fillArray1to100();    //11
-        //doubleNumbersLess6InArray();    //12
-        //fillDiagonalsWith1(); //13
+        reverse1and0InArray(); //10
+        fillArray1to100();    //11
+        doubleNumbersLess6InArray();    //12
+        fillDiagonalsWith1(); //13
 
         int[] array14 = createAndInitializeArray(8, 69);    //14
         System.out.println("Массив:\n"+ Arrays.toString(array14));
@@ -201,7 +201,7 @@ public class Main {
             for (int j=0; j<SIZE; j++) {
                 System.out.print(square[i][j]+"\t");
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 
@@ -213,9 +213,7 @@ public class Main {
             return null;
         }
         int[] result = new int[len];
-        for (int i=0; i<len; i++){
-            result[i]=initialValue;
-        }
+        Arrays.fill(result,initialValue);
         return result;
     }
 
