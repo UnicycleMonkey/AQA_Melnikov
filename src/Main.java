@@ -5,51 +5,60 @@ import java.time.Month;
 public class Main {
     public static void main(String[] args) {
  //Создать массив из 5 товаров.
-        Product[] productsArray = {   //02
-            new Product(
-                "Мыло",
-                LocalDate.of(2025, Month.JANUARY,1),
-                "Рога&Копыта",
-                "Беларусь",
-                100500),
-            new Product(
-                "Веревка",
-                LocalDate.of(1889, Month.MARCH,31),
-                "РотФронт",
-                "Кирибати",
-                123456.78,
-                Product.BookingStatuses.FREE),
-            new Product(
-                "Вжух",
-                LocalDate.of(2001, Month.SEPTEMBER,11),
-                "Трактористы Inc",
-                "Афганистан",
-                300,
-                Product.BookingStatuses.BOOKED),
-            new Product(
-                "End of Days",
-                LocalDate.of(2012, Month.DECEMBER,31),
-                "Майя",
-                "Мексика",
-                9999),
-            new Product(
-                "Знания",
-                LocalDate.of(1990, Month.FEBRUARY,3),
-                "ООО \"Опыт\"",
-                "Монако",
-                9876543.21,
-                Product.BookingStatuses.BOOKED)
-        };
+        Product[] productsArray = initializeProductArrayT02();  //02
         for (Product p:productsArray){
             p.printProductInfo();
+            printDelimiter();
         }
-        
+
         Park parkInstance = new Park(); //03
         initializePark (parkInstance);
-        System.out.println();
         parkInstance.printParkInfo();
     }
 
+    private static void printDelimiter() {
+        System.out.println();
+    }
+
+    private static Product[] initializeProductArrayT02(){
+            Product[] initializedArray = {
+                    new Product(
+                            "Мыло",
+                            LocalDate.of(2025, Month.JANUARY,1),
+                            "Рога&Копыта",
+                            "Беларусь",
+                            100500),
+                    new Product(
+                            "Веревка",
+                            LocalDate.of(1889, Month.MARCH,31),
+                            "РотФронт",
+                            "Кирибати",
+                            123456.78,
+                            Product.BookingStatuses.FREE),
+                    new Product(
+                            "Вжух",
+                            LocalDate.of(2001, Month.SEPTEMBER,11),
+                            "Трактористы Inc",
+                            "Афганистан",
+                            300,
+                            Product.BookingStatuses.BOOKED),
+                    new Product(
+                            "End of Days",
+                            LocalDate.of(2012, Month.DECEMBER,31),
+                            "Майя",
+                            "Мексика",
+                            9999),
+                    new Product(
+                            "Знания",
+                            LocalDate.of(1990, Month.FEBRUARY,3),
+                            "ООО \"Опыт\"",
+                            "Монако",
+                            9876543.21,
+                            Product.BookingStatuses.BOOKED)
+        };
+            return initializedArray;
+    }
+    
     private static void initializePark(Park park) {
         park.addAttraction(
                 "aaaa",
