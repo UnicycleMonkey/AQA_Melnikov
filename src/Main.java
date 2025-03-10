@@ -5,21 +5,44 @@ public class Main {
     public static void main(String[] args) {
         //Задание 1 (с животными)
         FoodContainer plate = new FoodContainer(CONTAINER_CAPACITY, INITIAL_FOOD_AMOUNT);
-        Dog sharik = new Dog("Шарик");
-        forceToEat(sharik, plate);
-        forceCardioTraining(sharik, 100,10);
-        Cat murzik = new Cat("Мурзик");
-        forceCardioTraining(murzik, 100, 10);
+        Dog dogInstance = new Dog("Шарик");
+        forceToEat(dogInstance, plate);
+        forceCardioTraining(dogInstance, 100,10);
+        Cat catInstance = new Cat("Мурзик");
+        forceCardioTraining(catInstance, 100, 10);
 
         Cat[] cats = createAndInitializeCats();
         for (Cat c: cats){
             forceToEat(c,plate);
             printContainerInfo(plate);
         }
+        fillAndCheckContainer(plate);
         printAnimalContersInfo();
 
         //Задание 2 (с фигурами)
+        manageFiguresT2();
+    }
 
+    private static void manageFiguresT2() {
+        Triangle triangle = new Triangle(3,4,5, "0x123456","0x5544FF");
+        System.out.println("Треугольник:\n" + triangle.getInfo());
+        Square square = new Square(5,"0x123456","0x5544FF");
+        System.out.println("Квадрат:\n" + square.getInfo());
+        Rectangle rectangle = new Rectangle(3, 4, "0x123456","0x5544FF");
+        System.out.println("Прямоугольник:\n" + rectangle.getInfo());
+        Circle circle = new Circle(10, "0x123456","0x5544FF");
+        System.out.println("Круг:\n" + circle.getInfo());
+
+    }
+
+    private static void fillAndCheckContainer(FoodContainer plate) {
+        double addition = 20;
+        System.out.printf("Добавление %.2f единиц еды: ",addition);
+        plate.fill(addition);
+        printContainerInfo(plate);
+        System.out.print("Заполнение: ");
+        plate.fill();
+        printContainerInfo(plate);
     }
 
     private static void forceCardioTraining(Animal animal, double runDistance, double swimDistance) {

@@ -30,7 +30,7 @@ public  abstract class Animal implements ICanRun, ICanSwim
 
     public double eatFromContainer(FoodContainer container){
         final double MAX_AMOUNT = 30;
-        double amount = Math.random()*MAX_AMOUNT;
+        double amount = Math.random()*MAX_AMOUNT + 1;
         if (container.tryGetSomeFood(amount)){
             isSate = true;
             return amount;
