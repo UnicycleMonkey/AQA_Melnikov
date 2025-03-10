@@ -89,14 +89,13 @@ public class Main {
     }
 
     private static Cat[] createAndInitializeCats(){
-        Cat[] cats ={
+        return new Cat[] {
                 new Cat("Пушок"),
                 new Cat("Беляшик"),
                 new Cat("Барсик"),
                 new Cat("Мурка"),
                 new Cat("Барбариска")
         };
-        return  cats;
     }
 
 }
