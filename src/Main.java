@@ -1,25 +1,65 @@
 public class Main {
     public static void main(String[] args) {
-        String [][] array4x4 = createBroken4x4();
-        printSquareStringArray(array4x4);
-        printSumArray4x4(array4x4);
+        String [][] broken4x4 = createBroken4x4();
+        printSquareStringArray(broken4x4);
+        printSumArray4x4(broken4x4);
+
         String [][] array5x5 = createAndInitializeSquareArray(5);
         printSquareStringArray(array5x5);
         printSumArray4x4(array5x5);
+
+        String [][] jaggedArray = new String[][]{
+                new String[]{"9","9","9","9","9",},
+                new String[] {"2","2"}};
+        printSquareStringArray(jaggedArray);
+        printSumArray4x4(jaggedArray);
+
         generateAndHandleExceptionT4();
     }
 
     private static void printSumArray4x4(String[][] array) {
-        boolean wasExceptionThrown = false;
-//        do{
+        boolean wasExceptionThrown;
+        do{
             try{
-                System.out.println(calculateSumArray4x4(array));
+                System.out.println("Сумма элементов массива равна: "+calculateSumArray4x4(array));
+                wasExceptionThrown=false;
             }catch (MyArrayDataException e){
+                wasExceptionThrown=true;
                 System.out.println(e.getMessage());
+                fixBrokenValue(array,e.getIndexes());
+                System.out.println("Пытаемся починить:");
+                printSquareStringArray(array);
             }catch (MyArraySizeException e) {
+                wasExceptionThrown=true;
                 System.out.println(e.getMessage());
+                array = resizeArrayTo4x4(array);
+                System.out.println("Приведение массива к нужному размеру:");
+                printSquareStringArray(array);
             }
-//        }while(wasExceptionThrown);
+        }while(wasExceptionThrown);
+    }
+
+    private static String[][] resizeArrayTo4x4(String[][] array) {
+        final int SIZE = 4;
+        final String DEFAULT = "0";
+        String [][] result = new String[SIZE][SIZE];
+        for (int i = 0; i < SIZE ; i++) {
+            for (int j = 0; j < SIZE ; j++) {
+                if(i>=array.length){
+                    result[i][j]=DEFAULT;
+                }else if (j>=array[i].length){
+                    result[i][j]=DEFAULT;
+                } else {
+                    result[i][j]=array[i][j];
+                }
+            }
+        }
+        return result;
+    }
+
+    private static void fixBrokenValue(String[][] array, int[] indexes) {
+        final String REPLACEMENT = "0";
+        array[indexes[0]][indexes[1]] = REPLACEMENT;
     }
 
     private static void generateAndHandleExceptionT4(){
@@ -58,7 +98,7 @@ public class Main {
 
     private static void printSquareStringArray( String[][] array){
         for(int i=0; i<array.length; i++) {
-            for (int j=0; j<array[0].length; j++) {
+            for (int j=0; j<array[i].length; j++) {
                 System.out.print(array[i][j]+"\t");
             }
             System.out.println();
