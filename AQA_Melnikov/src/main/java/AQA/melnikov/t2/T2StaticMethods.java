@@ -10,6 +10,7 @@ public class T2StaticMethods {
 
     public static void printPhonesCollection(HashMap<Long, String> map) {
         map.forEach( (num, name) -> System.out.printf("+%d\t%s\n",num, name));
+        System.out.println();
     }
 
     public static HashMap<Long, String> initializePhoneDirectory() {

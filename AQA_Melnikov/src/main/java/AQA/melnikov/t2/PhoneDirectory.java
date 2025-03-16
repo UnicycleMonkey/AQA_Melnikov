@@ -20,6 +20,10 @@ public class PhoneDirectory {
         return result;
     }
 
+    public HashMap<Long, String> get(String searchName) {
+        return findByName(searchName);
+    }
+
     public PhoneDirectory(HashMap<Long, String> collection){
         directory = collection;
     }
