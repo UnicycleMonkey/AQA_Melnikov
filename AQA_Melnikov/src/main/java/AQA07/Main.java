@@ -29,35 +29,35 @@ public class Main {
         double p = (sideA + sideB+ sideC)/2;
         double result = p * (p-sideA) * (p-sideB) * (p-sideC);
         if (result<=0) {
-           // throw new NotTriangleException(String.format("%f, %f, %f - не треугольник", sideA, sideB, sideC));
+           throw new NotTriangleException(String.format("%f, %f, %f - не треугольник", sideA, sideB, sideC));
         }
         return Math.sqrt(result); //Формула Герона
     }
 
-//    static double provideArithmeticalOperation (double arg1, ArithmeticalOperations operation, double arg2) {
-//        double result;
-//        switch (operation){
-//            case ADDITION: result = arg1 + arg2;
-//                break;
-//            case DIVISION:
-//                if (arg2==0){
-//                    throw new CustomDivisionByZeroException("Деление на ноль! ["+arg1+"/0]");
-//                }
-//                result = arg1/arg2;
-//                break;
-//            case SUBSTRACTION:
-//                result = arg1 - arg2;
-//                break;
-//            default:
-//                result = arg1 * arg2;
-//        }
-//        return result;
-//    }
-//
-//    static NumbersComparcion compareNumbers(double number1,double number2){
-//        if (number1 == number2){
-//            return NumbersComparcion.EQUAL;
-//        }
-//        return (number1>number2)? NumbersComparcion.GREATER_THAN: NumbersComparcion.LESSER_THAN;
-//    }
+    static double provideArithmeticalOperation (double arg1, ArithmeticalOperations operation, double arg2) {
+        double result;
+        switch (operation){
+            case ADDITION: result = arg1 + arg2;
+                break;
+            case DIVISION:
+                if (arg2==0){
+                    throw new CustomDivisionByZeroException("Деление на ноль! ["+arg1+"/0]");
+                }
+                result = arg1/arg2;
+                break;
+            case SUBSTRACTION:
+                result = arg1 - arg2;
+                break;
+            default:
+                result = arg1 * arg2;
+        }
+        return result;
+    }
+
+    static NumbersComparcion compareNumbers(double number1,double number2){
+        if (number1 == number2){
+            return NumbersComparcion.EQUAL;
+        }
+        return (number1>number2)? NumbersComparcion.GREATER_THAN: NumbersComparcion.LESSER_THAN;
+    }
 }
