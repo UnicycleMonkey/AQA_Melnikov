@@ -1,4 +1,4 @@
-package org.example;
+package AQA08;
 
 public class Main {
     public static void main(String[] args) {
