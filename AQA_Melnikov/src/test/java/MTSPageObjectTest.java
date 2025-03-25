@@ -5,10 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 
@@ -49,7 +46,6 @@ public class MTSPageObjectTest {
         System.out.println(driver.manage().timeouts().getImplicitWaitTimeout());
     }
 
-
     @Disabled
     @Test
     @Description("Проверка заголовка оплаты")
@@ -59,46 +55,34 @@ public class MTSPageObjectTest {
                 && mainPage.lastPickedElementDisplayed());
     }
 
-//    @Disabled
-//    @Test
-//    @Description("Проверка лого платежных систем")
-//    void testPaymentLogos(){
-//        System.out.println("Тест логотипов платежных систем");
-//        boolean result = true;
-//        for (int i = 1; i <= 5; i++) {
-//            result= result && tryToFind(mainPage.getPaymentSystemLogo(i));
-//        }
-//        Assert.assertTrue(result);
-//    }
-//
-//    @Disabled
-//    @Test
-//    @Description("Ссылка \"Подробнее о сервисе\"")
-//    void testAboutLink(){
-//        System.out.println("Проверка ссылки \"Подробнее о сервисе\"");
-//        WebElement linkAbout = driver.findElement(mainPage.getAboutServiceLink());
-//        linkAbout.click();
-//        Assert.assertEquals(driver.getTitle(), "Порядок оплаты и безопасность интернет платежей");
-//    }
-//
-//    @Disabled
-//    @Test
-//    @Description("Проверка оплаты")
-//    void testPayment(){
-//        System.out.println("Проверка работоспособности оплаты");
-//        final String MOCK_PHONE = "297777777";
-//        final String PAYMENT = "1";
-//
-//        WebElement inputPhone = driver.findElement (mainPage.getInputPhone());
-//        WebElement inputPayment = driver.findElement (mainPage.getInputPayment());
-//        WebElement proceedButton = driver.findElement (mainPage.getProceedPaymentButton());
-//
-//        inputPhone.sendKeys(MOCK_PHONE+ Keys.ENTER);
-//        inputPayment.sendKeys(PAYMENT);
-//        proceedButton.click();
-//        explicitWait(5000);
-//
-//        Assert.assertTrue(driver.findElement (mainPage.getIframePaymentConfirmation()).isEnabled());
-//
-//    }
+    @Disabled
+    @Test
+    @Description("Проверка лого платежных систем")
+    void testPaymentLogos(){
+        System.out.println("Тест логотипов платежных систем");
+        boolean result = mainPage.checkLogoVisibility(MTSPageObject.LogoContainers.PAYMENT_SECTION,5);
+        Assert.assertTrue(result);
+    }
+
+    @Disabled
+    @Test
+    @Description("Ссылка \"Подробнее о сервисе\"")
+    void testAboutLink(){
+        System.out.println("Проверка ссылки \"Подробнее о сервисе\"");
+        mainPage.followLink (MTSPageObject.Links.ABOUT_SERVICE);
+        Assert.assertEquals (driver.getTitle(), "Порядок оплаты и безопасность интернет платежей");
+    }
+
+    @Disabled
+    @Test
+    @Description("Проверка оплаты")
+    void testPayment(){
+        System.out.println("Проверка работоспособности оплаты");
+        final String MOCK_PHONE = "297777777";
+        final String PAYMENT = "1";
+
+        mainPage.replenishAccount(MOCK_PHONE,PAYMENT);
+        Assert.assertTrue(mainPage.lastPickedElementDisplayed());
+        Assert.assertEquals(mainPage.getLastPickedElementTag(),"iframe");
+    }
 }
