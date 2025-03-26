@@ -1,10 +1,10 @@
 package AQA09.pages;
-
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MTSPageObject {
     private final static String url = "https://mts.by";
@@ -16,8 +16,11 @@ public class MTSPageObject {
     private final static String proceedPaymentButtonXPath = "//*[@id='pay-connection']/button[@class='button button__default ']";
     private final static String iframePaymentConfirmationXPath = "//div[@class='bepaid-app']/div/iframe";
     private final static String paymentSystemsLogoUlXPath = "//*[@class='pay__partners']/ul/";
-    private final static String paymentSystemsLogoContainerXPath = "//*[@class='cards-brands cards-brands__container" +
+    private final static String paymentSystemsLogoContainerXPath = "//*[@class='cards-brands cards-brands__container " +
             "ng-tns-c891095944-0 ng-trigger ng-trigger-brandsState ng-star-inserted']";
+    private final static String paymentTypeDropdownXPath="//*[@class='select__list']";
+    private final static String getPaymentTypeButtonXPath = "//*[@class='select__header']";
+    private final static int PAYMENT_TYPES_QUANTITY = 4;
 
     private final WebDriver driver;
     private WebElement lastPickedElement;
@@ -41,6 +44,39 @@ public class MTSPageObject {
         }
     }
 
+    public enum PaymentTypeForms{
+        PAY_CONNECTION("//*[@id='pay-connection']"),
+        PAY_INTERNET("//*[@id='pay-internet']"),
+        PAY_INSTALMENT("//*[@id='pay-instalment']"),
+        PAY_ARREARS("//*[@id='pay-arrears']");
+        private final String xPath;
+
+        PaymentTypeForms(String xPath) {
+            this.xPath = xPath;
+        }
+
+        public String getXPath(int num){
+            if(num<0 || num>=PaymentTypeForms.values().length){
+                throw new IllegalArgumentException();
+            }
+            String result = "";
+            switch (num){
+                case 0:
+                    result =  PAY_CONNECTION.xPath;
+                    break;
+                case 1:
+                    result =  PAY_INTERNET.xPath;
+                    break;
+                case 2:
+                    result =  PAY_INSTALMENT.xPath;
+                    break;
+                case 3:
+                    result =  PAY_ARREARS.xPath;
+            }
+            return result;
+        }
+    }
+
     public MTSPageObject(WebDriver driver){
         this.driver=driver;
         driver.get(url);
@@ -48,6 +84,25 @@ public class MTSPageObject {
 
     public void followLink(Links link){
         driver.findElement(By.xpath(link.xPath)).click();
+    }
+
+    public void pickPaymentType(int option){
+        if (option < 0 || option >= PAYMENT_TYPES_QUANTITY){
+            throw  new IllegalArgumentException();
+        }
+        driver.findElement(By.xpath(getPaymentTypeButtonXPath)).click();
+        explicitWait(500);
+        driver.findElement(By.xpath(paymentTypeDropdownXPath+"/*["+(option+1)+"]")).click();
+    }
+
+    public ArrayList <String> getPaymentPlaceholders(int option){
+        List <WebElement> inputs =  driver.findElements(
+                By.xpath(PaymentTypeForms.PAY_CONNECTION.getXPath(option)+"//input"));
+        ArrayList<String> result = new ArrayList<>();
+        for(WebElement we: inputs){
+            result.add(we.getDomProperty("placeholder"));
+        }
+        return result;
     }
 
     public boolean checkLogoVisibility(LogoContainers container, int quantity){
@@ -61,13 +116,6 @@ public class MTSPageObject {
             return false;
         }
         return result;
-    }
-
-    public boolean lastPickedElementEnabled(){
-        if (lastPickedElement == null){
-            return false;
-        }
-        return lastPickedElement.isEnabled();
     }
 
     public boolean lastPickedElementDisplayed(){
@@ -92,8 +140,8 @@ public class MTSPageObject {
         inputPhone.sendKeys(phoneNumber);
         inputPayment.sendKeys(amount);
         proceedButton.click();
-        lastPickedElement = waitForElementDisplayed(iframePaymentConfirmationXPath, 3500);
-        explicitWait(1000); //так и не осилил, чтобы успевало появиться без этого костыля
+        lastPickedElement = waitForElementDisplayed(iframePaymentConfirmationXPath, 6000);
+        explicitWait(2000); //так и не осилил, чтобы успевало появиться без этого костыля
         System.out.println(lastPickedElement.getTagName());
     }
 
@@ -113,10 +161,6 @@ public class MTSPageObject {
         }catch (ElementNotInteractableException e){
             System.out.println("Окошка не было");
         }
-    }
-
-    public String getTitle(){
-        return driver.getTitle();
     }
 
     private WebElement waitForElementDisplayed (String xPath, long timeout){
