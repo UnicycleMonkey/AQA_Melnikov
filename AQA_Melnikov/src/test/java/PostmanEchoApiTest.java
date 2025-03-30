@@ -4,6 +4,7 @@ import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -23,8 +24,9 @@ public class PostmanEchoApiTest {
         response200Spec = expect().statusCode(HttpStatus.SC_OK); //потому что могу
     }
 
-    @Disabled
+
     @Test
+    @DisplayName("Метод GET")
     void getRequest(){
         Map<String,String> params = new HashMap<>();
         params.put("foo1", "bar1");
@@ -44,8 +46,8 @@ public class PostmanEchoApiTest {
         ;
     }
 
-    @Disabled
     @Test
+    @DisplayName("Метод POST (текст)")
     void postRequestText(){
         String content="bla-bla-bla";
         given()
@@ -60,8 +62,8 @@ public class PostmanEchoApiTest {
         ;
     }
 
-    @Disabled
     @Test
+    @DisplayName("Метод POST (значения)")
     void postRequestData(){
         String [] keys = new String[] {"foo1","foo2"};
         String [] values = new String[] {"bar1","bar2"};
@@ -80,8 +82,8 @@ public class PostmanEchoApiTest {
         ;
     }
 
-    @Disabled
     @Test
+    @DisplayName("Метод PUT")
     void putRequestText(){
         String content="bla-bla...bla?";
         given()
@@ -97,8 +99,8 @@ public class PostmanEchoApiTest {
         ;
     }
 
-    @Disabled
     @Test
+    @DisplayName("Метод PATCH")
     void patchRequestText(){
         String content="Om-nom-nom!";
         given()
@@ -114,8 +116,8 @@ public class PostmanEchoApiTest {
         ;
     }
 
-    @Disabled
     @Test
+    @DisplayName("Метод DELETE")
     void deleteRequestText(){
         String content="Om-nom-nom!";
         given()
