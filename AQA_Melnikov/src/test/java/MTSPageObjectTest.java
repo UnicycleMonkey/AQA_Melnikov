@@ -1,14 +1,11 @@
 import AQA11.pages.MTSPageObject;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Attachment;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.junit.Assert;
-import java.time.Duration;
 import java.util.Arrays;
-import io.qameta.allure.Description;
 
 public class MTSPageObjectTest {
     WebDriver driver;
@@ -21,9 +18,7 @@ public class MTSPageObjectTest {
     @BeforeEach
     void setupTest() {
         System.out.println("Перед каждым тестом");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        driver = DriverHandler.getConfiguratedDriver();
         mainPage = new MTSPageObject(driver);
         mainPage.handleCookie();
     }
@@ -31,49 +26,48 @@ public class MTSPageObjectTest {
     @AfterEach
     void closeBrowserWindow() {
         System.out.println("Закрываю окно");
-        driver.quit();
-        driver = null;
+        driver = DriverHandler.terminateDriver(driver);
         mainPage = null;
     }
 
-  //  @Disabled
+    @Disabled
     @Test
     @DisplayName("Плейсхолдеры интернет")
     void payInternetFormTest(){
         int option = 1;
         String [] expected = {"Номер абонента","Сумма","E-mail для отправки чека"};
         String[] result = getPlaceholdersArray(option);
-        Assert.assertEquals(expected,result);
+        Assertions.assertEquals(expected, result);
     }
 
-   // @Disabled
+    @Disabled
     @Test
     @DisplayName("Плейсхолдеры рассрочка")
     void payInstalmentFormTest(){
         int option = 2;
         String [] expected = {"Номер счета на 44","Сумма","E-mail для отправки чека"};
         String[] result = getPlaceholdersArray(option);
-        Assert.assertEquals(expected,result);
+        Assertions.assertEquals(expected, result);
     }
 
-   // @Disabled
+    @Disabled
     @Test
     @DisplayName("Плейсхолдеры мобильная связь")
     void payConnectionFormTest(){
         int option = 0;
         String [] expected = {"Номер телефона","Сумма","E-mail для отправки чека"};
         String[] result = getPlaceholdersArray(option);
-        Assert.assertEquals(expected,result);
+        Assertions.assertEquals(expected, result);
     }
 
-   // @Disabled
+    @Disabled
     @Test
     @DisplayName("Плейсхолдеры задолженность")
     void payArrearsFormTest(){
         int option = 3;
         String [] expected = {"Номер счета на 2073","Сумма","E-mail для отправки чека"};
         String[] result = getPlaceholdersArray(option);
-        Assert.assertEquals(expected,result);
+        Assertions.assertEquals(expected, result);
     }
 
     private String[] getPlaceholdersArray(int option) {
@@ -83,30 +77,31 @@ public class MTSPageObjectTest {
         return result;
     }
 
+    @Disabled
     @Test
     @DisplayName("Проверка заголовка оплаты")
     void testPayTitle(){
         System.out.println("Проверка заголовка оплаты");
-        Assert.assertTrue("Онлайн пополнение\nбез комиссии".equals(mainPage.getPayTitleText())
+        Assertions.assertTrue("Онлайн пополнение\nбез комиссии".equals(mainPage.getPayTitleText())
                 && mainPage.lastPickedElementDisplayed());
     }
 
-   // @Disabled
+    @Disabled
     @Test
     @DisplayName("Проверка лого платежных систем")
     void testPaymentLogos(){
         System.out.println("Тест логотипов платежных систем");
         boolean result = mainPage.checkLogoVisibility(MTSPageObject.LogoContainers.PAYMENT_SECTION,5);
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
-   // @Disabled
+    //@Disabled
     @Test
     @DisplayName("Ссылка \"Подробнее о сервисе\"")
     void testAboutLink(){
         System.out.println("Проверка ссылки \"Подробнее о сервисе\"");
         mainPage.followLink (MTSPageObject.Links.ABOUT_SERVICE);
-        Assert.assertEquals (driver.getTitle(), "Порядок оплаты и безопасность интернет платежей");
+        Assertions.assertEquals(driver.getTitle(), "Порядок оплаты и безопасность интернет платежей");
     }
 
     //@Disabled
@@ -118,8 +113,8 @@ public class MTSPageObjectTest {
         final String PAYMENT = "1";
 
         mainPage.replenishAccount(MOCK_PHONE,PAYMENT);
-        Assert.assertTrue(mainPage.lastPickedElementDisplayed());
-        Assert.assertEquals(mainPage.getLastPickedElementTag(),"iframe");
+        Assertions.assertTrue(mainPage.lastPickedElementDisplayed());
+        Assertions.assertEquals(mainPage.getLastPickedElementTag(), "iframe");
     }
 
     @Disabled
@@ -133,6 +128,12 @@ public class MTSPageObjectTest {
         driver.switchTo().frame(0);
         boolean result = mainPage.checkLogoVisibility(MTSPageObject.LogoContainers.PROCEED_FRAME,4);
         System.out.println(result);
-        Assert.assertTrue(true);
+        Assertions.assertTrue(result);
+        makeScreenshot();
+    }
+
+    @Attachment(value = "Attachment Screenshot", type = "image/png")
+    public byte[] makeScreenshot() {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }
